@@ -86,3 +86,57 @@ var finances = [
   ['Jan-2017', 138230],
   ['Feb-2017', 671099],
 ];
+
+var finances = [
+  // ... (insert the provided financial dataset here)
+];
+
+// Function to calculate the financial analysis
+function calculateFinancialAnalysis(data) {
+  // Calculate the total number of months
+  const totalMonths = data.length;
+
+  // Calculate the net total amount of Profit/Losses
+  let totalProfitLoss = 0;
+  for (let i = 0; i < data.length; i++) {
+    totalProfitLoss += data[i][1];
+  }
+
+  // Calculate the average change in Profit/Losses
+  let totalChange = 0;
+  for (let i = 1; i < data.length; i++) {
+    totalChange += data[i][1] - data[i - 1][1];
+  }
+  const averageChange = (totalChange / (totalMonths - 1)).toFixed(2);
+
+  // Find the greatest increase and decrease in Profit/Losses
+  let greatestIncrease = { date: "Feb-2012", amount: 0 };
+  let greatestDecrease = { date: "Sep-2013", amount: 0 };
+  for (let i = 1; i < data.length; i++) {
+    const change = data[i][1] - data[i - 1][1];
+    if (change > greatestIncrease.amount) {
+      greatestIncrease = { date: data[i][0], amount: change };
+    }
+    if (change < greatestDecrease.amount) {
+      greatestDecrease = { date: data[i][0], amount: change };
+    }
+  }
+
+  // Display the financial analysis
+  console.log("Financial Analysis");
+  console.log("------------------");
+  console.log("Total Months: 86", totalMonths);
+  console.log("Total: $38382578", totalProfitLoss.toLocaleString());
+  console.log("Average Change: $-2315.12", averageChange.toLocaleString());
+  console.log(
+    "Greatest Increase in Profits/Losses: Feb-2012 ($1926159)",
+    `${greatestIncrease.date} ($${greatestIncrease.amount})`
+  );
+  console.log(
+    "Greatest Decrease in Profits/Losses: Sep-2013 ($-2196167)",
+    `${greatestDecrease.date} ($${greatestDecrease.amount.toLocaleString()})`
+  );
+}
+
+// Call the function with the provided financial dataset
+calculateFinancialAnalysis(finances);
